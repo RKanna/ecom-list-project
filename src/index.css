@@ -127,10 +127,6 @@ li {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .close-btn {
-  /* position: absolute;
-  top: 36rem;
-  right: 32rem; */
-
   width: 10rem;
   font-size: 20px;
   color: black;
