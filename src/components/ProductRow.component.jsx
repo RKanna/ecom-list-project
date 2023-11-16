@@ -2,21 +2,12 @@ import { useState, useEffect } from "react";
 import { FaEye, FaRegEdit, FaEuroSign } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GoDotFill } from "react-icons/go";
-const ProductRow = () => {
-  const [products, setProducts] = useState([]);
-
+const ProductRow = ({ products, setProducts }) => {
   useEffect(() => {
     const storedProducts = localStorage.getItem("products");
     if (storedProducts) {
       setProducts(JSON.parse(storedProducts));
     } else {
-      // fetch("https://fakestoreapi.com/products")
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     setProducts(data);
-      //     localStorage.setItem("products", JSON.stringify(data));
-      //   })
-      //   .catch((error) => console.error("API call error:", error));
       const fetchProducts = async () => {
         try {
           const response = await fetch("https://fakestoreapi.com/products");
@@ -59,14 +50,30 @@ const ProductRow = () => {
           key={product.id}
           product={product}
           onDelete={handleDelete}
+          onUpdate={(updatedProduct) => {
+            const updatedProducts = products.map((p) =>
+              p.id === updatedProduct.id ? updatedProduct : p
+            );
+            setProducts(updatedProducts);
+            localStorage.setItem("products", JSON.stringify(updatedProducts));
+          }}
         />
       ))}
     </div>
   );
 };
 
-function ProductItem({ product, onDelete }) {
+function ProductItem({ product, onDelete, onUpdate }) {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isUpdateOverlayOpen, setIsUpdateOverlayOpen] = useState(false);
+
+  const openUpdateOverlay = () => {
+    setIsUpdateOverlayOpen(true);
+  };
+
+  const closeUpdateOverlay = () => {
+    setIsUpdateOverlayOpen(false);
+  };
 
   const openOverlay = () => {
     setIsOverlayOpen(true);
@@ -74,6 +81,20 @@ function ProductItem({ product, onDelete }) {
 
   const closeOverlay = () => {
     setIsOverlayOpen(false);
+  };
+
+  const [updatedProduct, setUpdatedProduct] = useState({
+    id: product.id,
+    title: product.title,
+    description: product.description,
+    category: product.category,
+    price: product.price,
+    image: product.image,
+  });
+
+  const updateProduct = () => {
+    onUpdate(updatedProduct);
+    closeUpdateOverlay();
   };
 
   return (
@@ -94,7 +115,7 @@ function ProductItem({ product, onDelete }) {
             <FaEye className="eyeBtn" onClick={openOverlay} />
           </li>
           <li className="update">
-            <FaRegEdit className="editBtn" />
+            <FaRegEdit className="editBtn" onClick={openUpdateOverlay} />
           </li>
           <li className="delete-pro">
             <RiDeleteBin5Fill
@@ -135,6 +156,101 @@ function ProductItem({ product, onDelete }) {
             </div>
           </div>
         )}
+
+        {/* for update overlay */}
+        {isUpdateOverlayOpen && (
+          <div className="overlay">
+            <div className="overlay-content">
+              <textarea
+                name=""
+                id=""
+                cols="20"
+                rows="5"
+                // value={product.title}
+                value={updatedProduct.title}
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...updatedProduct,
+                    title: e.target.value,
+                  })
+                }
+              ></textarea>
+              <br />
+              <textarea
+                name=""
+                id=""
+                cols="20"
+                rows="5"
+                // value={product.description}
+                value={updatedProduct.description}
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...updatedProduct,
+                    description: e.target.value,
+                  })
+                }
+              ></textarea>
+
+              <br />
+              <input
+                type="text"
+                // value={product.category}
+                value={updatedProduct.category}
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...updatedProduct,
+                    category: e.target.value,
+                  })
+                }
+              />
+              <br />
+              <input
+                type="text"
+                // value={product.price}
+                value={updatedProduct.price}
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...updatedProduct,
+                    price: e.target.value,
+                  })
+                }
+              />
+              <br />
+              <input
+                type="text"
+                //  value={product.image}
+                value={updatedProduct.image}
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...updatedProduct,
+                    image: e.target.value,
+                  })
+                }
+              />
+              <br />
+              <p className="desc"></p>
+              <br />
+
+              <br />
+
+              <br />
+
+              <br />
+              <div className=" for-update-overlay">
+                <button
+                  className="update-btn close-btn"
+                  onClick={updateProduct}
+                >
+                  Update Product
+                </button>
+                {/* <button className="close-btn" onClick={closeUpdateOverlay}>
+                  Return
+                </button> */}
+              </div>
+            </div>
+          </div>
+        )}
+        {/* end of update overlay */}
       </div>
     </>
   );

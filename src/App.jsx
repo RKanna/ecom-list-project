@@ -1,6 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Heading from "./components/Heading.component";
 import Search from "./components/Search.component";
@@ -10,15 +8,16 @@ import ProductRow from "./components/ProductRow.component";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [products, setProducts] = useState([]);
 
   return (
     <>
       <main>
         <Heading />
         <Search />
-        <AddProduct />
-        <Total />
-        <ProductRow />
+        <AddProduct products={products} setProducts={setProducts} />
+        <Total products={products} />
+        <ProductRow products={products} setProducts={setProducts} />
       </main>
     </>
   );
