@@ -9,15 +9,20 @@ import ProductRow from "./components/ProductRow.component";
 function App() {
   const [count, setCount] = useState(0);
   const [products, setProducts] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  const filteredProducts = products.filter((product) =>
+    product.title.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <>
       <main>
         <Heading />
-        <Search />
+        <Search searchText={searchText} setSearchText={setSearchText} />
         <AddProduct products={products} setProducts={setProducts} />
         <Total products={products} />
-        <ProductRow products={products} setProducts={setProducts} />
+        <ProductRow products={filteredProducts} setProducts={setProducts} />
       </main>
     </>
   );
