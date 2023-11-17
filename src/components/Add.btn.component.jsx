@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductRow from "./ProductRow.component";
+import { IoMdClose } from "react-icons/io";
 const AddProduct = ({ products, setProducts }) => {
   const [isAddProductOverlayOpen, setIsAddProductOverlayOpen] = useState(false);
 
@@ -63,6 +64,9 @@ const AddProduct = ({ products, setProducts }) => {
       {isAddProductOverlayOpen && (
         <div className="overlay">
           <div className="overlay-content">
+            <div className="for-close-icon">
+              <IoMdClose className="close-icon" onClick={closeProductOverlay} />
+            </div>
             <h2 className="overlay-title">Add Product</h2>
             <br />
             <hr />

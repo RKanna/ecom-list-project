@@ -128,10 +128,18 @@ li {
 }
 .close-btn {
   width: 10rem;
-  font-size: 20px;
+  font-size: 1rem;
   color: black;
   background-color: rgb(235, 235, 23);
   cursor: pointer;
+  border: none;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
+  border-radius: 0.5rem;
+}
+.close-btn:hover {
+  color: green;
+  border: 1px solid grey;
 }
 .overlay-img {
   width: 13rem;
@@ -172,4 +180,13 @@ li {
   flex-direction: column;
   align-items: end;
   gap: 2rem;
+}
+.for-close-icon {
+  display: flex;
+  justify-content: end;
+  padding-bottom: 0.5rem;
+}
+.close-icon:hover {
+  cursor: pointer;
+  color: red;
 }

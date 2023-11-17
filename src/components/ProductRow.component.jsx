@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaEye, FaRegEdit, FaEuroSign } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GoDotFill } from "react-icons/go";
+import { IoMdClose } from "react-icons/io";
 const ProductRow = ({ products, setProducts }) => {
   useEffect(() => {
     const storedProducts = localStorage.getItem("products");
@@ -106,7 +107,7 @@ function ProductItem({ product, onDelete, onUpdate }) {
           <li className="category">{product.category}</li>
           <li className="price-pro">
             {product.price}
-            {/* <FaEuroSign /> */}
+            {/* <FaEuroSign /> */} €
           </li>
           <li>
             <img className="api-img" src={product.image} alt="" />
@@ -161,6 +162,13 @@ function ProductItem({ product, onDelete, onUpdate }) {
         {isUpdateOverlayOpen && (
           <div className="overlay">
             <div className="overlay-content">
+              <div className="for-close-icon">
+                <IoMdClose
+                  className="close-icon"
+                  onClick={closeUpdateOverlay}
+                />
+              </div>
+
               <textarea
                 name=""
                 id=""
