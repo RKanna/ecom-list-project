@@ -7,7 +7,6 @@ import Total from "./components/Total.component";
 import ProductRow from "./components/ProductRow.component";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
 
